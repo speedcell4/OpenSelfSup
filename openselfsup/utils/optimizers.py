@@ -1,6 +1,6 @@
 import torch
-from torch.optim.optimizer import Optimizer, required
 from torch.optim import *
+from torch.optim.optimizer import Optimizer, required
 
 
 class LARS(Optimizer):
@@ -95,7 +95,7 @@ class LARS(Optimizer):
                     grad_norm = torch.norm(d_p).item()
                     # Compute local learning rate for this layer
                     local_lr = eta * weight_norm / \
-                        (grad_norm + weight_decay * weight_norm)
+                               (grad_norm + weight_decay * weight_norm)
 
                 actual_lr = local_lr * lr
                 d_p = d_p.add(p, alpha=weight_decay).mul(actual_lr)
@@ -103,7 +103,7 @@ class LARS(Optimizer):
                     param_state = self.state[p]
                     if 'momentum_buffer' not in param_state:
                         buf = param_state['momentum_buffer'] = \
-                                torch.clone(d_p).detach()
+                            torch.clone(d_p).detach()
                     else:
                         buf = param_state['momentum_buffer']
                         buf.mul_(momentum).add_(d_p, alpha=1 - dampening)

@@ -1,12 +1,10 @@
 import torch
 from torch.utils.data import Dataset
-
-from openselfsup.utils import build_from_cfg
-
 from torchvision.transforms import Compose
 
-from .registry import DATASETS, PIPELINES
+from openselfsup.utils import build_from_cfg
 from .builder import build_datasource
+from .registry import DATASETS, PIPELINES
 
 
 @DATASETS.register_module

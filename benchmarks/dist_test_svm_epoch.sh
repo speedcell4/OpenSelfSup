@@ -9,13 +9,13 @@ GPUS=${4:-8}
 WORK_DIR=$(echo ${CFG%.*} | sed -e "s/configs/work_dirs/g")/
 
 if [ "$CFG" == "" ] || [ "$EPOCH" == "" ]; then
-    echo "ERROR: Missing arguments."
-    exit
+  echo "ERROR: Missing arguments."
+  exit
 fi
 
 if [ ! -f $WORK_DIR/epoch_${EPOCH}.pth ]; then
-    echo "ERROR: File not exist: $WORK_DIR/epoch_${EPOCH}.pth"
-    exit
+  echo "ERROR: File not exist: $WORK_DIR/epoch_${EPOCH}.pth"
+  exit
 fi
 
 mkdir -p $WORK_DIR/logs

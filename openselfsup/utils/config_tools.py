@@ -1,5 +1,6 @@
 from mmcv import Config
 
+
 def traverse_replace(d, key, value):
     if isinstance(d, (dict, Config)):
         for k, v in d.items():

@@ -1,7 +1,6 @@
-from functools import partial
-
 import mmcv
 import numpy as np
+from functools import partial
 from six.moves import map, zip
 
 
@@ -28,10 +27,10 @@ def unmap(data, count, inds, fill=0):
     """ Unmap a subset of item (data) back to the original set of items (of
     size count) """
     if data.dim() == 1:
-        ret = data.new_full((count, ), fill)
+        ret = data.new_full((count,), fill)
         ret[inds] = data
     else:
-        new_size = (count, ) + data.size()[1:]
+        new_size = (count,) + data.size()[1:]
         ret = data.new_full(new_size, fill)
         ret[inds, :] = data
     return ret

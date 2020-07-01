@@ -1,14 +1,11 @@
-from abc import ABCMeta, abstractmethod
-
 import torch
+from abc import ABCMeta, abstractmethod
 from torch.utils.data import Dataset
-
-from openselfsup.utils import print_log, build_from_cfg
-
 from torchvision.transforms import Compose
 
-from .registry import DATASETS, PIPELINES
+from openselfsup.utils import print_log, build_from_cfg
 from .builder import build_datasource
+from .registry import DATASETS, PIPELINES
 
 
 class BaseDataset(Dataset, metaclass=ABCMeta):

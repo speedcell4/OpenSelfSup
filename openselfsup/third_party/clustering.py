@@ -1,9 +1,9 @@
 # This file is modified from
 # https://github.com/facebookresearch/deepcluster/blob/master/clustering.py
 
-import time
-import numpy as np
 import faiss
+import numpy as np
+import time
 import torch
 
 __all__ = ['Kmeans', 'PIC']
@@ -18,7 +18,7 @@ def preprocess_features(npdata, pca):
         np.array of dim N * pca: data PCA-reduced, whitened and L2-normalized
     """
     _, ndim = npdata.shape
-    #npdata =  npdata.astype('float32')
+    # npdata =  npdata.astype('float32')
     assert npdata.dtype == np.float32
 
     if np.any(np.isnan(npdata)):
@@ -157,7 +157,7 @@ def make_adjacencyW(I, D, sigma):
     indptr = np.multiply(k, np.arange(V + 1))
 
     def exp_ker(d):
-        return np.exp(-d / sigma**2)
+        return np.exp(-d / sigma ** 2)
 
     exp_ker = np.vectorize(exp_ker)
     res_D = exp_ker(D)
@@ -297,7 +297,7 @@ class PIC():
                 images_lists[clust[s]].append(s)
 
         self.images_lists = []
-        self.labels = -1 * np.ones((data.shape[0], ), dtype=np.int)
+        self.labels = -1 * np.ones((data.shape[0],), dtype=np.int)
         for i, c in enumerate(images_lists):
             self.images_lists.append(images_lists[c])
             self.labels[images_lists[c]] = i

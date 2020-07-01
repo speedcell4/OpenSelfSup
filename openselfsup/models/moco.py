@@ -2,17 +2,17 @@ import torch
 import torch.nn as nn
 
 from openselfsup.utils import print_log
-
 from . import builder
 from .registry import MODELS
 
 
 @MODELS.register_module
 class MOCO(nn.Module):
-    '''MOCO.
+    """
+    MOCO.
     Part of the code is borrowed from:
         "https://github.com/facebookresearch/moco/blob/master/moco/builder.py".
-    '''
+    """
 
     def __init__(self,
                  backbone,

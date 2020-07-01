@@ -1,6 +1,5 @@
-import warnings
-
 import torch.nn as nn
+import warnings
 from mmcv.cnn import constant_init, kaiming_init
 
 from .conv_ws import ConvWS2d

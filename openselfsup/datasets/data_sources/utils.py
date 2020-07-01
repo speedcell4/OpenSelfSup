@@ -1,5 +1,6 @@
 import io
 from PIL import Image
+
 try:
     import mc
 except ImportError as E:

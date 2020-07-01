@@ -1,5 +1,5 @@
-from .registry import DATASETS
 from .base import BaseDataset
+from .registry import DATASETS
 
 
 @DATASETS.register_module

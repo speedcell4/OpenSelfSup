@@ -1,19 +1,19 @@
+import numpy as np
 import platform
 import random
 from functools import partial
-
-import numpy as np
 from mmcv.parallel import collate
 from mmcv.runner import get_dist_info
 from torch.utils.data import DataLoader
-
-#from .sampler import DistributedGroupSampler, DistributedSampler, GroupSampler
-from .sampler import DistributedSampler, DistributedGivenIterationSampler
 from torch.utils.data import RandomSampler
+
+# from .sampler import DistributedGroupSampler, DistributedSampler, GroupSampler
+from .sampler import DistributedSampler, DistributedGivenIterationSampler
 
 if platform.system() != 'Windows':
     # https://github.com/pytorch/pytorch/issues/973
     import resource
+
     rlimit = resource.getrlimit(resource.RLIMIT_NOFILE)
     resource.setrlimit(resource.RLIMIT_NOFILE, (4096, rlimit[1]))
 

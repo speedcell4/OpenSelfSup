@@ -1,4 +1,5 @@
 import copy
+
 _base_ = '../../base.py'
 # model settings
 model = dict(
@@ -31,7 +32,7 @@ data_train_root = 'data/imagenet/train'
 dataset_type = 'BYOLDataset'
 img_norm_cfg = dict(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 train_pipeline = [
-    dict(type='RandomResizedCrop', size=224, interpolation=3), # bicubic
+    dict(type='RandomResizedCrop', size=224, interpolation=3),  # bicubic
     dict(type='RandomHorizontalFlip'),
     dict(
         type='RandomAppliedTrans',
@@ -62,8 +63,8 @@ train_pipeline = [
 ]
 train_pipeline1 = copy.deepcopy(train_pipeline)
 train_pipeline2 = copy.deepcopy(train_pipeline)
-train_pipeline2[4]['p'] = 0.1 # gaussian blur
-train_pipeline2[5]['p'] = 0.2 # solarization
+train_pipeline2[4]['p'] = 0.1  # gaussian blur
+train_pipeline2[5]['p'] = 0.2  # solarization
 
 data = dict(
     imgs_per_gpu=32,  # total 32*8=256
@@ -82,15 +83,15 @@ custom_hooks = [
 # optimizer
 optimizer = dict(type='LARS', lr=0.2, weight_decay=0.0000015, momentum=0.9,
                  paramwise_options={
-                    '(bn|gn)(\d+)?.(weight|bias)': dict(weight_decay=0., lars_exclude=True),
-                    'bias': dict(weight_decay=0., lars_exclude=True)})
+                     '(bn|gn)(\d+)?.(weight|bias)': dict(weight_decay=0., lars_exclude=True),
+                     'bias': dict(weight_decay=0., lars_exclude=True)})
 # learning policy
 lr_config = dict(
     policy='CosineAnealing',
     min_lr=0.,
     warmup='linear',
     warmup_iters=2,
-    warmup_ratio=0.0001, # cannot be 0
+    warmup_ratio=0.0001,  # cannot be 0
     warmup_by_epoch=True)
 checkpoint_config = dict(interval=10)
 # runtime settings

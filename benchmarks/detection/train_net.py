@@ -55,7 +55,7 @@ def main(args):
         model = Trainer.build_model(cfg)
         DetectionCheckpointer(
             model, save_dir=cfg.OUTPUT_DIR).resume_or_load(
-                cfg.MODEL.WEIGHTS, resume=args.resume)
+            cfg.MODEL.WEIGHTS, resume=args.resume)
         res = Trainer.test(cfg, model)
         return res
 
@@ -73,5 +73,5 @@ if __name__ == "__main__":
         num_machines=args.num_machines,
         machine_rank=args.machine_rank,
         dist_url=args.dist_url,
-        args=(args, ),
+        args=(args,),
     )

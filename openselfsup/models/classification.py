@@ -1,9 +1,7 @@
 import numpy as np
-
 import torch.nn as nn
 
 from openselfsup.utils import print_log
-
 from . import builder
 from .registry import MODELS
 from .utils import Sobel
@@ -28,7 +26,7 @@ class Classification(nn.Module):
 
     def init_weights(self, pretrained=None):
         if pretrained is not None:
-            print_log('load model from: {}'.format(pretrained), logger='root')
+            print_log(f'load model from: {pretrained}', logger='root')
         self.backbone.init_weights(pretrained=pretrained)
         self.head.init_weights()
 
@@ -53,15 +51,13 @@ class Classification(nn.Module):
     def forward_test(self, img, **kwargs):
         x = self.forward_backbone(img)  # tuple
         outs = self.head(x)
-        keys = ['head{}'.format(i) for i in range(len(outs))]
+        keys = [f'head{i}' for i in range(len(outs))]
         out_tensors = [out.cpu() for out in outs]  # NxC
         return dict(zip(keys, out_tensors))
 
     def aug_test(self, imgs):
         raise NotImplemented
-        outs = np.mean([self.head(x) for x in self.forward_backbone(imgs)],
-                       axis=0)
-        return outs
+        return np.mean([self.head(x) for x in self.forward_backbone(imgs)], axis=0)
 
     def forward(self, img, mode='train', **kwargs):
         if mode == 'train':
@@ -71,4 +67,4 @@ class Classification(nn.Module):
         elif mode == 'extract':
             return self.forward_backbone(img)
         else:
-            raise Exception("No such mode: {}".format(mode))
+            raise Exception(f"No such mode: {mode}")

@@ -1,19 +1,18 @@
 import argparse
 import importlib
+import mmcv
 import numpy as np
 import os
 import os.path as osp
 import time
-
-import mmcv
 import torch
 from mmcv.parallel import MMDataParallel, MMDistributedDataParallel
 from mmcv.runner import get_dist_info, init_dist, load_checkpoint
 
-from openselfsup.utils import dist_forward_collect, nondist_forward_collect
 from openselfsup.datasets import build_dataloader, build_dataset
 from openselfsup.models import build_model
 from openselfsup.models.utils import MultiPooling
+from openselfsup.utils import dist_forward_collect, nondist_forward_collect
 from openselfsup.utils import get_root_logger
 
 
@@ -31,7 +30,7 @@ class ExtractProcess(object):
         pooling_feats = self.multi_pooling(backbone_feats)
         flat_feats = [xx.view(xx.size(0), -1) for xx in pooling_feats]
         feat_dict = {'feat{}'.format(i + 1): feat.cpu() \
-            for i, feat in enumerate(flat_feats)}
+                     for i, feat in enumerate(flat_feats)}
         return feat_dict
 
     def extract(self, model, data_loader, distributed=False):
@@ -75,7 +74,7 @@ def parse_args():
         help='job launcher')
     parser.add_argument('--local_rank', type=int, default=0)
     parser.add_argument('--port', type=int, default=29500,
-        help='port only works when launcher=="slurm"')
+                        help='port only works when launcher=="slurm"')
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
         os.environ['LOCAL_RANK'] = str(args.local_rank)
@@ -146,7 +145,7 @@ def main():
             args.pretrained))
     else:
         logger.info('No checkpoint or pretrained is give, use random init.')
-        
+
     if not distributed:
         model = MMDataParallel(model, device_ids=[0])
     else:

@@ -1,17 +1,16 @@
 import argparse
 import importlib
+import mmcv
 import os
 import os.path as osp
 import time
-
-import mmcv
 import torch
 from mmcv.parallel import MMDataParallel, MMDistributedDataParallel
 from mmcv.runner import get_dist_info, init_dist, load_checkpoint
 
 from openselfsup.datasets import build_dataloader, build_dataset
 from openselfsup.models import build_model
-from openselfsup.utils import (get_root_logger, dist_forward_collect, 
+from openselfsup.utils import (get_root_logger, dist_forward_collect,
                                nondist_forward_collect, traverse_replace)
 
 
@@ -49,7 +48,7 @@ def parse_args():
         help='job launcher')
     parser.add_argument('--local_rank', type=int, default=0)
     parser.add_argument('--port', type=int, default=29500,
-        help='port only works when launcher=="slurm"')
+                        help='port only works when launcher=="slurm"')
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
         os.environ['LOCAL_RANK'] = str(args.local_rank)

@@ -1,9 +1,9 @@
 import torch
-import torch.nn as nn
 import torch.distributed as dist
+import torch.nn as nn
 from mmcv.runner import get_dist_info
-from openselfsup.utils import AliasMethod
 
+from openselfsup.utils import AliasMethod
 from ..registry import MEMORIES
 
 
@@ -24,7 +24,7 @@ class SimpleMemory(nn.Module):
         ind, feature_norm = self._gather(ind, feature_norm)
         feature_old = self.feature_bank[ind, ...]
         feature_new = (1 - self.momentum) * feature_old + \
-            self.momentum * feature_norm
+                      self.momentum * feature_norm
         feature_new_norm = nn.functional.normalize(feature_new)
         self.feature_bank[ind, ...] = feature_new_norm
 

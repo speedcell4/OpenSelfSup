@@ -1,5 +1,4 @@
 from PIL import Image
-
 from torchvision.datasets import CIFAR10, CIFAR100
 
 from ..registry import DATASOURCES
@@ -7,7 +6,6 @@ from ..registry import DATASOURCES
 
 @DATASOURCES.register_module
 class Cifar10(object):
-
     CLASSES = [
         'airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog',
         'horse', 'ship', 'truck'
@@ -35,7 +33,6 @@ class Cifar10(object):
 
 @DATASOURCES.register_module
 class Cifar100(object):
-
     CLASSES = None
 
     def __init__(self, root, split):

@@ -1,5 +1,4 @@
 import numpy as np
-
 from mmcv.runner import Hook
 
 from openselfsup.utils import print_log

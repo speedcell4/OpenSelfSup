@@ -13,7 +13,7 @@ model = dict(
         out_indices=[4],  # 0: conv-1, x: stage-x
         norm_cfg=dict(type='BN')),
     neck=dict(
-        type='NonLinearNeckSimCLR', # SimCLR non-linear neck
+        type='NonLinearNeckSimCLR',  # SimCLR non-linear neck
         in_channels=2048,
         hid_channels=2048,
         out_channels=128,

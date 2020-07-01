@@ -18,7 +18,7 @@ class MultiPooling(nn.Module):
 
     def __init__(self,
                  pool_type='adaptive',
-                 in_indices=(0, ),
+                 in_indices=(0,),
                  backbone='resnet50'):
         super(MultiPooling, self).__init__()
         assert pool_type in ['adaptive', 'specified']

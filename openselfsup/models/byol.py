@@ -2,15 +2,15 @@ import torch
 import torch.nn as nn
 
 from openselfsup.utils import print_log
-
 from . import builder
 from .registry import MODELS
 
 
 @MODELS.register_module
 class BYOL(nn.Module):
-    '''BYOL unofficial implementation. Paper: https://arxiv.org/abs/2006.07733
-    '''
+    """
+    BYOL unofficial implementation. Paper: https://arxiv.org/abs/2006.07733
+    """
 
     def __init__(self,
                  backbone,
@@ -35,9 +35,9 @@ class BYOL(nn.Module):
 
     def init_weights(self, pretrained=None):
         if pretrained is not None:
-            print_log('load model from: {}'.format(pretrained), logger='root')
-        self.online_net[0].init_weights(pretrained=pretrained) # backbone
-        self.online_net[1].init_weights(init_linear='kaiming') # projection
+            print_log(f'load model from: {pretrained}', logger='root')
+        self.online_net[0].init_weights(pretrained=pretrained)  # backbone
+        self.online_net[1].init_weights(init_linear='kaiming')  # projection
         for param_ol, param_tgt in zip(self.online_net.parameters(),
                                        self.target_net.parameters()):
             param_tgt.data.copy_(param_ol.data)
@@ -56,7 +56,7 @@ class BYOL(nn.Module):
 
     def forward_train(self, img, **kwargs):
         assert img.dim() == 5, \
-            "Input must have 5 dims, got: {}".format(img.dim())
+            f"Input must have 5 dims, got: {img.dim()}"
         img_v1 = img[:, 0, ...].contiguous()
         img_v2 = img[:, 1, ...].contiguous()
         img_cat1 = torch.cat([img_v1, img_v2], dim=0)
@@ -81,4 +81,4 @@ class BYOL(nn.Module):
         elif mode == 'extract':
             return self.backbone(img)
         else:
-            raise Exception("No such mode: {}".format(mode))
+            raise Exception(f"No such mode: {mode}")

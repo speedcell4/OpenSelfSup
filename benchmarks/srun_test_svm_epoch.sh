@@ -10,8 +10,8 @@ GPUS=${5:-8}
 WORK_DIR=$(echo ${CFG%.*} | sed -e "s/configs/work_dirs/g")/
 
 if [ ! -f $WORK_DIR/epoch_${EPOCH}.pth ]; then
-    echo "ERROR: File not exist: $WORK_DIR/epoch_${EPOCH}.pth"
-    exit
+  echo "ERROR: File not exist: $WORK_DIR/epoch_${EPOCH}.pth"
+  exit
 fi
 
 mkdir -p $WORK_DIR/logs

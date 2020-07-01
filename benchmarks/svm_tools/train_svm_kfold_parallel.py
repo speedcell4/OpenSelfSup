@@ -11,25 +11,23 @@ SVM training using 3-fold cross-validation.
 Relevant transfer tasks: Image Classification VOC07 and COCO2014.
 """
 
-from __future__ import division
 from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
-import multiprocessing as mp
-import tqdm
 import argparse
 import logging
+import multiprocessing as mp
 import numpy as np
 import os
-import pickle
-import sys
-from sklearn.svm import LinearSVC
-from sklearn.model_selection import cross_val_score
-
-import svm_helper
-
 import pdb
+import pickle
+import svm_helper
+import sys
+import tqdm
+from sklearn.model_selection import cross_val_score
+from sklearn.svm import LinearSVC
 
 
 def task(cls, cost, opts, features, targets):

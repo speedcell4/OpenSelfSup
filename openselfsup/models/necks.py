@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
-from packaging import version
 from mmcv.cnn import kaiming_init, normal_init
+from packaging import version
 
 from .registry import NECKS
 from .utils import build_norm_layer
@@ -9,7 +9,7 @@ from .utils import build_norm_layer
 
 def _init_weights(module, init_linear='normal'):
     assert init_linear in ['normal', 'kaiming'], \
-        "Undefined init_linear: {}".format(init_linear)
+        f"Undefined init_linear: {init_linear}"
     for m in module.modules():
         if isinstance(m, nn.Linear):
             if init_linear == 'normal':
@@ -26,8 +26,8 @@ def _init_weights(module, init_linear='normal'):
 
 @NECKS.register_module
 class LinearNeck(nn.Module):
-    '''Linear neck: fc only
-    '''
+    """Linear neck: fc only
+    """
 
     def __init__(self, in_channels, out_channels, with_avg_pool=True):
         super(LinearNeck, self).__init__()
@@ -49,8 +49,8 @@ class LinearNeck(nn.Module):
 
 @NECKS.register_module
 class NonLinearNeckV0(nn.Module):
-    '''The non-linear neck in ODC, fc-bn-relu-dropout-fc-relu
-    '''
+    """The non-linear neck in ODC, fc-bn-relu-dropout-fc-relu
+    """
 
     def __init__(self,
                  in_channels,
@@ -80,8 +80,9 @@ class NonLinearNeckV0(nn.Module):
 
 @NECKS.register_module
 class NonLinearNeckV1(nn.Module):
-    '''The non-linear neck in MoCO v2: fc-relu-fc
-    '''
+    """The non-linear neck in MoCO v2: fc-relu-fc
+    """
+
     def __init__(self,
                  in_channels,
                  hid_channels,
@@ -108,8 +109,9 @@ class NonLinearNeckV1(nn.Module):
 
 @NECKS.register_module
 class NonLinearNeckV2(nn.Module):
-    '''The non-linear neck in byol: fc-bn-relu-fc
-    '''
+    """The non-linear neck in byol: fc-bn-relu-fc
+    """
+
     def __init__(self,
                  in_channels,
                  hid_channels,
@@ -129,7 +131,7 @@ class NonLinearNeckV2(nn.Module):
         _init_weights(self, init_linear)
 
     def forward(self, x):
-        assert len(x) == 1, "Got: {}".format(len(x))
+        assert len(x) == 1, f"Got: {len(x)}"
         x = x[0]
         if self.with_avg_pool:
             x = self.avgpool(x)
@@ -138,7 +140,7 @@ class NonLinearNeckV2(nn.Module):
 
 @NECKS.register_module
 class NonLinearNeckSimCLR(nn.Module):
-    '''SimCLR non-linear neck.
+    """SimCLR non-linear neck.
     Structure: fc(no_bias)-bn(has_bias)-[relu-fc(no_bias)-bn(no_bias)].
         The substructures in [] can be repeated. For the SimCLR default setting,
         the repeat time is 1.
@@ -153,7 +155,7 @@ class NonLinearNeckSimCLR(nn.Module):
 
     Arguments:
         num_layers (int): number of fc layers, it is 2 in the SimCLR default setting.
-    '''
+    """
 
     def __init__(self,
                  in_channels,
@@ -182,13 +184,13 @@ class NonLinearNeckSimCLR(nn.Module):
             this_channels = out_channels if i == num_layers - 1 \
                 else hid_channels
             self.add_module(
-                "fc{}".format(i),
+                f"fc{i}",
                 nn.Linear(hid_channels, this_channels, bias=False))
             self.add_module(
-                "bn{}".format(i),
+                f"bn{i}",
                 build_norm_layer(dict(type='SyncBN'), this_channels)[1])
-            self.fc_names.append("fc{}".format(i))
-            self.bn_names.append("bn{}".format(i))
+            self.fc_names.append(f"fc{i}")
+            self.bn_names.append(f"bn{i}")
 
     def init_weights(self, init_linear='normal'):
         _init_weights(self, init_linear)

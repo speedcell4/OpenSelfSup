@@ -1,10 +1,9 @@
+import numpy as np
 import random
 import re
-from collections import OrderedDict
-
-import numpy as np
 import torch
 import torch.distributed as dist
+from collections import OrderedDict
 from mmcv.parallel import MMDataParallel, MMDistributedDataParallel
 from mmcv.runner import DistSamplerSeedHook, Runner, obj_from_dict
 
@@ -149,7 +148,7 @@ def build_optimizer(model, optimizer_cfg):
             for regexp, options in paramwise_options.items():
                 if re.search(regexp, name):
                     for key, value in options.items():
-                        if key.endswith('_mult'): # is a multiplier
+                        if key.endswith('_mult'):  # is a multiplier
                             key = key[:-5]
                             assert key in optimizer_cfg, \
                                 "{} not in optimizer_cfg".format(key)
@@ -226,7 +225,6 @@ def _non_dist_train(model,
                     logger=None,
                     timestamp=None,
                     meta=None):
-
     # prepare data loaders
     dataset = dataset if isinstance(dataset, (list, tuple)) else [dataset]
     data_loaders = [

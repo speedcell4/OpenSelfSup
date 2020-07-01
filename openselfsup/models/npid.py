@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 
 from openselfsup.utils import print_log
-
 from . import builder
 from .registry import MODELS
 

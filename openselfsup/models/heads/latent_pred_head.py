@@ -2,8 +2,9 @@ import torch
 import torch.nn as nn
 from mmcv.cnn import normal_init
 
-from ..registry import HEADS
 from .. import builder
+from ..registry import HEADS
+
 
 @HEADS.register_module
 class LatentPredictHead(nn.Module):

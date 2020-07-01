@@ -12,23 +12,21 @@ Relevant transfer tasks: Low-shot Image Classification VOC07 and Places205 low
 shot samples.
 """
 
-from __future__ import division
 from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
 import argparse
 import logging
 import numpy as np
 import os
 import pickle
+import svm_helper
 import sys
+import time
 from sklearn.svm import LinearSVC
 from tqdm import tqdm
-
-import svm_helper
-
-import time
 
 # create the logger
 FORMAT = '[%(levelname)s: %(filename)s: %(lineno)4d]: %(message)s'
@@ -48,7 +46,7 @@ def train_svm_low_shot(opts):
 
     # parse the cost values for training the SVM on
     costs_list = svm_helper.parse_cost_list(opts.costs_list)
-    #logger.info('Training SVM for costs: {}'.format(costs_list))
+    # logger.info('Training SVM for costs: {}'.format(costs_list))
 
     # classes for which SVM testing should be done
     num_classes, cls_list = svm_helper.get_low_shot_svm_classes(
@@ -66,8 +64,8 @@ def train_svm_low_shot(opts):
             if os.path.exists(out_file):
                 logger.info('SVM model exists: {}'.format(out_file))
             else:
-                #logger.info('SVM model not found: {}'.format(out_file))
-                #logger.info('Training model with the cost: {}'.format(cost))
+                # logger.info('SVM model not found: {}'.format(out_file))
+                # logger.info('Training model with the cost: {}'.format(cost))
                 clf = LinearSVC(
                     C=cost,
                     class_weight={
@@ -84,21 +82,21 @@ def train_svm_low_shot(opts):
                 )
                 train_feats, train_cls_labels = svm_helper.get_cls_feats_labels(
                     cls, features, targets, opts.dataset)
-                #num_positives = len(np.where(train_cls_labels == 1)[0])
-                #num_negatives = len(np.where(train_cls_labels == -1)[0])
+                # num_positives = len(np.where(train_cls_labels == 1)[0])
+                # num_negatives = len(np.where(train_cls_labels == -1)[0])
 
-                #logger.info('cls: {} has +ve: {} -ve: {} ratio: {}'.format(
+                # logger.info('cls: {} has +ve: {} -ve: {} ratio: {}'.format(
                 #    cls, num_positives, num_negatives,
                 #    float(num_positives) / num_negatives)
-                #)
-                #logger.info('features: {} cls_labels: {}'.format(
+                # )
+                # logger.info('features: {} cls_labels: {}'.format(
                 #    train_feats.shape, train_cls_labels.shape))
                 clf.fit(train_feats, train_cls_labels)
-                #logger.info('Saving SVM model to: {}'.format(out_file))
+                # logger.info('Saving SVM model to: {}'.format(out_file))
                 with open(out_file, 'wb') as fwrite:
                     pickle.dump(clf, fwrite)
-            #print("time: {:.4g} s".format(time.time() - start))
-    #logger.info('All done!')
+            # print("time: {:.4g} s".format(time.time() - start))
+    # logger.info('All done!')
 
 
 def main():
@@ -136,7 +134,7 @@ def main():
 
     opts = parser.parse_args()
 
-    #logger.info(opts)
+    # logger.info(opts)
     train_svm_low_shot(opts)
 
 

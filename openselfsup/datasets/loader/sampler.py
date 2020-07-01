@@ -1,6 +1,6 @@
 from __future__ import division
-import math
 
+import math
 import numpy as np
 import torch
 from mmcv.runner import get_dist_info
@@ -28,7 +28,7 @@ class DistributedSampler(_DistributedSampler):
         else:
             self.unif_sampling_flag = False
         return iter(self.indices[self.rank * self.num_samples:(self.rank + 1) *
-                                 self.num_samples])
+                                                              self.num_samples])
 
     def generate_new_list(self):
         if self.shuffle:
@@ -38,7 +38,7 @@ class DistributedSampler(_DistributedSampler):
                 indices = torch.randint(
                     low=0,
                     high=len(self.dataset),
-                    size=(len(self.dataset), ),
+                    size=(len(self.dataset),),
                     generator=g).tolist()
             else:
                 indices = torch.randperm(
@@ -292,7 +292,7 @@ class DistributedGivenIterationSampler(Sampler):
         # note here we do not take last iter into consideration, since __len__
         # should only be used for displaying, the correct remaining size is
         # handled by dataloader
-        #return self.total_size - (self.last_iter+1)*self.batch_size
+        # return self.total_size - (self.last_iter+1)*self.batch_size
         return self.total_size
 
     def set_epoch(self, epoch):

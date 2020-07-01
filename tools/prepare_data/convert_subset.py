@@ -17,7 +17,7 @@ with open("data/imagenet/meta/train_labeled.txt", 'r') as f:
 keys = [l.split('/')[0] for l in lines]
 labels = [l.strip().split()[1] for l in lines]
 mapping = {}
-for k,l in zip(keys, labels):
+for k, l in zip(keys, labels):
     if k not in mapping:
         mapping[k] = l
     else:
@@ -30,6 +30,6 @@ fns = [l.strip() for l in lines]
 sample_keys = [l.split('_')[0] for l in lines]
 sample_labels = [mapping[k] for k in sample_keys]
 output_lines = ["{}/{} {}\n".format(k, fn, l) for \
-    k,fn,l in zip(sample_keys, fns, sample_labels)]
+                k, fn, l in zip(sample_keys, fns, sample_labels)]
 with open(args.output, 'w') as f:
     f.writelines(output_lines)

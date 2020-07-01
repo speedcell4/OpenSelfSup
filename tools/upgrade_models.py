@@ -1,5 +1,5 @@
-import torch
 import argparse
+import torch
 
 
 def parse_args():

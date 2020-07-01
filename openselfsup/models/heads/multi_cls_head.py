@@ -1,7 +1,7 @@
 import torch.nn as nn
 
-from ..utils import accuracy
 from ..registry import HEADS
+from ..utils import accuracy
 from ..utils import build_norm_layer, MultiPooling
 
 
@@ -14,7 +14,7 @@ class MultiClsHead(nn.Module):
 
     def __init__(self,
                  pool_type='adaptive',
-                 in_indices=(0, ),
+                 in_indices=(0,),
                  with_last_layer_unpool=False,
                  backbone='resnet50',
                  norm_cfg=dict(type='BN'),

@@ -1,10 +1,8 @@
 import numpy as np
-
 import torch
 import torch.nn as nn
 
 from openselfsup.utils import print_log
-
 from . import builder
 from .registry import MODELS
 from .utils import Sobel
@@ -31,13 +29,13 @@ class DeepCluster(nn.Module):
 
         # reweight
         self.num_classes = head.num_classes
-        self.loss_weight = torch.ones((self.num_classes, ),
+        self.loss_weight = torch.ones((self.num_classes,),
                                       dtype=torch.float32).cuda()
         self.loss_weight /= self.loss_weight.sum()
 
     def init_weights(self, pretrained=None):
         if pretrained is not None:
-            print_log('load model from: {}'.format(pretrained), logger='root')
+            print_log(f'load model from: {pretrained}', logger='root')
         self.backbone.init_weights(pretrained=pretrained)
         self.neck.init_weights(init_linear='kaiming')
         self.head.init_weights(init_linear='normal')
@@ -65,7 +63,7 @@ class DeepCluster(nn.Module):
     def forward_test(self, img, **kwargs):
         x = self.forward_backbone(img)  # tuple
         outs = self.head(x)
-        keys = ['head{}'.format(i) for i in range(len(outs))]
+        keys = [f"head{i}" for i in range(len(outs))]
         out_tensors = [out.cpu() for out in outs]  # NxC
         return dict(zip(keys, out_tensors))
 
@@ -77,12 +75,12 @@ class DeepCluster(nn.Module):
         elif mode == 'extract':
             return self.forward_backbone(img)
         else:
-            raise Exception("No such mode: {}".format(mode))
+            raise Exception(f"No such mode: {mode}")
 
     def set_reweight(self, labels, reweight_pow=0.5):
         hist = np.bincount(
             labels, minlength=self.num_classes).astype(np.float32)
-        inv_hist = (1. / (hist + 1e-10))**reweight_pow
+        inv_hist = (1. / (hist + 1e-10)) ** reweight_pow
         weight = inv_hist / inv_hist.sum()
         self.loss_weight.copy_(torch.from_numpy(weight))
         self.head.criterion = nn.CrossEntropyLoss(weight=self.loss_weight)

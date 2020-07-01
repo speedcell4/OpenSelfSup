@@ -11,7 +11,7 @@ WORK_DIR="$(dirname $CHECKPOINT)/"
 
 # test
 python -m torch.distributed.launch --nproc_per_node=$GPUS --master_port=$PORT \
-    tools/test.py \
-    $CFG \
-    $CHECKPOINT \
-    --work_dir $WORK_DIR --launcher="pytorch"
+  tools/test.py \
+  $CFG \
+  $CHECKPOINT \
+  --work_dir $WORK_DIR --launcher="pytorch"

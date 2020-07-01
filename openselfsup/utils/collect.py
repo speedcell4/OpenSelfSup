@@ -1,6 +1,5 @@
-import numpy as np
-
 import mmcv
+import numpy as np
 import torch
 
 from .gather import gather_tensors_batch

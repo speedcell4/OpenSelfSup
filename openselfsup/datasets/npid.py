@@ -1,6 +1,7 @@
 from PIL import Image
-from .registry import DATASETS
+
 from .base import BaseDataset
+from .registry import DATASETS
 
 
 @DATASETS.register_module
@@ -16,10 +17,9 @@ class NPIDDataset(BaseDataset):
         assert isinstance(img, Image.Image), \
             'The output from the data source must be an Image, got: {}. \
             Please ensure that the list file does not contain labels.'.format(
-            type(img))
+                type(img))
         img = self.pipeline(img)
         return dict(img=img, idx=idx)
 
     def evaluate(self, scores, keyword, logger=None):
-
         raise NotImplemented

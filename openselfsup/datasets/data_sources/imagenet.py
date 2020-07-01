@@ -1,5 +1,5 @@
-from ..registry import DATASOURCES
 from .image_list import ImageList
+from ..registry import DATASOURCES
 
 
 @DATASOURCES.register_module

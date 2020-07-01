@@ -4,9 +4,8 @@ import contextlib
 import logging
 import os
 import time
-from typing import List
-
 import torch
+from typing import List
 
 logger = logging.getLogger(__name__)
 

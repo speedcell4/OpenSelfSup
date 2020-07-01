@@ -1,11 +1,11 @@
 from __future__ import division
+
 import argparse
 import importlib
+import mmcv
 import os
 import os.path as osp
 import time
-
-import mmcv
 import torch
 from mmcv import Config
 from mmcv.runner import init_dist
@@ -34,7 +34,7 @@ def parse_args():
         type=int,
         default=1,
         help='number of gpus to use '
-        '(only applicable to non-distributed training)')
+             '(only applicable to non-distributed training)')
     parser.add_argument('--seed', type=int, default=None, help='random seed')
     parser.add_argument(
         '--deterministic',
@@ -47,7 +47,7 @@ def parse_args():
         help='job launcher')
     parser.add_argument('--local_rank', type=int, default=0)
     parser.add_argument('--port', type=int, default=29500,
-        help='port only works when launcher=="slurm"')
+                        help='port only works when launcher=="slurm"')
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
         os.environ['LOCAL_RANK'] = str(args.local_rank)
@@ -77,7 +77,7 @@ def main():
     if args.launcher == 'none':
         distributed = False
         assert cfg.model.type not in \
-            ['DeepCluster', 'MOCO', 'SimCLR', 'ODC', 'NPID'], \
+               ['DeepCluster', 'MOCO', 'SimCLR', 'ODC', 'NPID'], \
             "{} does not support non-dist training.".format(cfg.model.type)
     else:
         distributed = True

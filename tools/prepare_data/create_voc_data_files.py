@@ -11,10 +11,10 @@ This script can be used to extract the VOC2007 and VOC2012 dataset files
 files can be prepared for various data splits
 """
 
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 import argparse
 import logging

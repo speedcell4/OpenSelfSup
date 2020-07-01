@@ -1,12 +1,11 @@
+import cv2
+import mmcv
 import os.path as osp
 import subprocess
 import sys
-from collections import defaultdict
-
-import cv2
-import mmcv
 import torch
 import torchvision
+from collections import defaultdict
 
 import openselfsup
 
@@ -52,9 +51,9 @@ def collect_env():
 
     env_info['MMCV'] = mmcv.__version__
     env_info['OpenSelfSup'] = openselfsup.__version__
-    #from openselfsup.ops import get_compiler_version, get_compiling_cuda_version
-    #env_info['OpenSelfSup Compiler'] = get_compiler_version()
-    #env_info['OpenSelfSup CUDA Compiler'] = get_compiling_cuda_version()
+    # from openselfsup.ops import get_compiler_version, get_compiling_cuda_version
+    # env_info['OpenSelfSup Compiler'] = get_compiler_version()
+    # env_info['OpenSelfSup CUDA Compiler'] = get_compiling_cuda_version()
     return env_info
 
 

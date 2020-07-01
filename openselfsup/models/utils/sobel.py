@@ -10,10 +10,8 @@ class Sobel(nn.Module):
         grayscale.weight.data.fill_(1.0 / 3.0)
         grayscale.bias.data.zero_()
         sobel_filter = nn.Conv2d(1, 2, kernel_size=3, stride=1, padding=1)
-        sobel_filter.weight.data[0, 0].copy_(
-            torch.FloatTensor([[1, 0, -1], [2, 0, -2], [1, 0, -1]]))
-        sobel_filter.weight.data[1, 0].copy_(
-            torch.FloatTensor([[1, 2, 1], [0, 0, 0], [-1, -2, -1]]))
+        sobel_filter.weight.data[0, 0].copy_(torch.tensor([[1, 0, -1], [2, 0, -2], [1, 0, -1]], dtype=torch.float32))
+        sobel_filter.weight.data[1, 0].copy_(torch.tensor([[1, 2, 1], [0, 0, 0], [-1, -2, -1]], dtype=torch.float32))
         sobel_filter.bias.data.zero_()
         self.sobel = nn.Sequential(grayscale, sobel_filter)
         for p in self.sobel.parameters():

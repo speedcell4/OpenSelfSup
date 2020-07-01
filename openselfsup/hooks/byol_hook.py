@@ -25,5 +25,5 @@ class BYOLHook(Hook):
         max_iter = runner.max_iters
         base_m = runner.model.module.base_momentum
         m = self.end_momentum - (self.end_momentum - base_m) * (
-            cos(pi * cur_iter / float(max_iter)) + 1) / 2
+                cos(pi * cur_iter / float(max_iter)) + 1) / 2
         runner.model.module.momentum = m

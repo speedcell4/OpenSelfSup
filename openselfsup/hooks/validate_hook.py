@@ -1,6 +1,5 @@
-from mmcv.runner import Hook
-
 import torch
+from mmcv.runner import Hook
 from torch.utils.data import Dataset
 
 from openselfsup.utils import nondist_forward_collect, dist_forward_collect

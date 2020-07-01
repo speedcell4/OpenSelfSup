@@ -12,24 +12,22 @@ Relevant transfer tasks: Low-shot Image Classification VOC07 and Places205 low
 shot samples.
 """
 
-from __future__ import division
 from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import division
 from __future__ import print_function
+from __future__ import unicode_literals
 
-import multiprocessing as mp
-import tqdm
 import argparse
 import logging
+import multiprocessing as mp
 import numpy as np
 import os
-import pickle
-import sys
-from sklearn.svm import LinearSVC
-
-import svm_helper
-
 import pdb
+import pickle
+import svm_helper
+import sys
+import tqdm
+from sklearn.svm import LinearSVC
 
 
 def task(cls, cost, opts, features, targets):
@@ -54,9 +52,9 @@ def task(cls, cost, opts, features, targets):
         train_feats, train_cls_labels = svm_helper.get_cls_feats_labels(
             cls, features, targets, opts.dataset)
         clf.fit(train_feats, train_cls_labels)
-        #cls_labels = targets[:, cls].astype(dtype=np.int32, copy=True)
-        #cls_labels[np.where(cls_labels == 0)] = -1
-        #clf.fit(features, cls_labels)
+        # cls_labels = targets[:, cls].astype(dtype=np.int32, copy=True)
+        # cls_labels[np.where(cls_labels == 0)] = -1
+        # clf.fit(features, cls_labels)
         with open(out_file, 'wb') as fwrite:
             pickle.dump(clf, fwrite)
     return 0

@@ -1,8 +1,8 @@
 import torch
 from PIL import Image
 
-from .registry import DATASETS
 from .base import BaseDataset
+from .registry import DATASETS
 
 
 def rotate(img):
@@ -30,7 +30,7 @@ class RotationPredDataset(BaseDataset):
         assert isinstance(img, Image.Image), \
             'The output from the data source must be an Image, got: {}. \
             Please ensure that the list file does not contain labels.'.format(
-            type(img))
+                type(img))
         img = self.pipeline(img)
         img = torch.stack(rotate(img), dim=0)
         rotation_labels = torch.LongTensor([0, 1, 2, 3])

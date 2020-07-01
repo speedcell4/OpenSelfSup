@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 
 from openselfsup.utils import print_log
-
 from . import builder
 from .registry import MODELS
 from .utils import GatherLayer
@@ -30,7 +29,7 @@ class SimCLR(nn.Module):
 
     def init_weights(self, pretrained=None):
         if pretrained is not None:
-            print_log('load model from: {}'.format(pretrained), logger='root')
+            print_log(f'load model from: {pretrained}', logger='root')
         self.backbone.init_weights(pretrained=pretrained)
         self.neck.init_weights(init_linear='kaiming')
 
@@ -45,7 +44,7 @@ class SimCLR(nn.Module):
 
     def forward_train(self, img, **kwargs):
         assert img.dim() == 5, \
-            "Input must have 5 dims, got: {}".format(img.dim())
+            f"Input must have 5 dims, got: {img.dim()}"
         img = img.reshape(
             img.size(0) * 2, img.size(2), img.size(3), img.size(4))
         x = self.forward_backbone(img)  # 2n
@@ -75,4 +74,4 @@ class SimCLR(nn.Module):
         elif mode == 'extract':
             return self.forward_backbone(img)
         else:
-            raise Exception("No such mode: {}".format(mode))
+            raise Exception(f"No such mode: {mode}")

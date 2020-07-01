@@ -1,9 +1,8 @@
 import torch
 
 from openselfsup.utils import print_log
-
-from .registry import DATASETS
 from .base import BaseDataset
+from .registry import DATASETS
 
 
 @DATASETS.register_module
@@ -27,7 +26,7 @@ class ClassificationDataset(BaseDataset):
         target = torch.LongTensor(self.data_source.labels)
         assert scores.size(0) == target.size(0), \
             "Inconsistent length for results and labels, {} vs {}".format(
-            scores.size(0), target.size(0))
+                scores.size(0), target.size(0))
         num = scores.size(0)
         _, pred = scores.topk(max(topk), dim=1, largest=True, sorted=True)
         pred = pred.t()

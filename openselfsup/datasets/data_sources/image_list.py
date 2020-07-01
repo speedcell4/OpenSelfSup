@@ -1,8 +1,8 @@
 import os
 from PIL import Image
 
-from ..registry import DATASOURCES
 from .utils import McLoader
+from ..registry import DATASOURCES
 
 
 @DATASOURCES.register_module
